@@ -2,7 +2,12 @@ using JSONConvertationAPI;
 using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddLogging();
 var app = builder.Build();
+
+
+app.UseMiddleware<TokenMiddleware>();
+
 
 app.MapGet("/", async (context) => {
     app.Logger.LogInformation($"Path: /  Time: {DateTime.Now.ToLongTimeString()}");
@@ -11,6 +16,7 @@ app.MapGet("/", async (context) => {
     app.Logger.LogInformation(responseData.ToString());
     await context.Response.WriteAsJsonAsync(responseData);
 });
+
 app.MapGet("/ping", async (context) =>
 {
     app.Logger.LogInformation($"Path: /ping  Time: {DateTime.Now.ToLongTimeString()}");
@@ -18,6 +24,7 @@ app.MapGet("/ping", async (context) =>
     app.Logger.LogInformation(status.ToString());
     await context.Response.WriteAsJsonAsync(status);
 });
+
 app.MapPost("/calculate", async (context) =>
 {
     app.Logger.LogInformation($"Path: /calculate  Time: {DateTime.Now.ToLongTimeString()}");
@@ -52,4 +59,5 @@ app.MapPost("/calculate", async (context) =>
         }
     }
 });
+
 app.Run();
