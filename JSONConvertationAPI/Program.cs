@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLogging();
-builder.Services.AddTransient<ISolvator>();
+builder.Services.AddTransient<ISolvator, NSSolvator>();
 var app = builder.Build();
 
 
