@@ -1,8 +1,10 @@
 using JSONConvertationAPI;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLogging();
+builder.Services.AddTransient<ISolvator>();
 var app = builder.Build();
 
 
@@ -47,7 +49,8 @@ app.MapPost("/calculate", async (context) =>
     {
         try
         {
-            Messages.CalcOutputMessage solvation = NSSolvator.Solve(convertation);
+            var Solvator = app.Services.GetRequiredService<ISolvator>();
+            Messages.CalcOutputMessage solvation = Solvator.Solve(convertation);
             app.Logger.LogInformation(solvation.ToString());
             await context.Response.WriteAsJsonAsync(solvation);
         }

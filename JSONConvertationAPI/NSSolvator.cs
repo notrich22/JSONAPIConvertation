@@ -1,8 +1,8 @@
 ﻿namespace JSONConvertationAPI
 {
-    public static class NSSolvator
+    public class NSSolvator : ISolvator
     {
-        public static Messages.CalcOutputMessage Solve(Messages.CalcInputMessage Input)
+        public Messages.CalcOutputMessage Solve(Messages.CalcInputMessage Input)
         {
             int x = Input.X;
             int numberSystem = Input.NumberSystem;
